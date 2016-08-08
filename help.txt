@@ -1,0 +1,28 @@
+Usage: run [COMMAND ...]
+
+Run Nominatim operations in a docker container.
+
+Positional arguments:
+  COMMAND          The command to run. (default: help)
+
+Commands:
+  help             Show this help message
+  initdb           Initialise the postgres database
+  startdb          Start the postgresql database
+  createuser       Create the osm user in the database
+  import           Import osm data into the database (reads /maps/import.pbf)
+  startservices    Start the nominatim web services
+  cli              Drop into a bash shell (hint: use -it)
+  dropdb           Drop the osm database
+
+Set up a database saved on an external volume:
+  The following command will initialise the postgresql database on an external volume that can be used to persist the data:
+
+  docker run -v /data/osm-postgresql:/var/lib/postgresql -v /data/maps:/maps *id* initdb startdb createuser import
+
+Import data:
+  The following will import the .osm file at `/maps/import.osm` into the database.
+
+  docker run -v /data/osm-postgresql:/var/lib/postgresql *id* startservices
+
+For further information run the cli.
